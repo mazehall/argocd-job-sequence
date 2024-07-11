@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root-app
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/mazehall/argocd-job-sequence.git
+    path: charts/root-app/
+    targetRevision: main
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: job-sequence
+  syncPolicy:
+    automated:
+      selfHeal: true
